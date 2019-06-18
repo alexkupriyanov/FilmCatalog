@@ -1,0 +1,79 @@
+﻿@using Microsoft.AspNet.Identity
+@model FilmKupriyanov.Models.Film
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Film</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Uploaded by:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatorUser.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Year):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Year)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Director):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Director)
+        </dd>
+        @if (Model.Poster != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Poster):
+            </dt>
+
+            <dd>
+                <div class="thumbnail col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                    <img src="@Html.DisplayFor(model => model.Poster)" alt="Image" />
+                    @if (User.Identity.GetUserId() == Model.CreatorUserId)
+                    {
+                        <div class="caption">
+                            @Html.ActionLink("Delete", "PosterDelete", "Films", new { posterName = Model.Poster, filmId = Model.Id }, new { @class = "btn btn-danger" })
+                        </div>
+                    }
+                </div>
+            </dd>
+        }
+    </dl>
+</div>
+<p>
+    @if (User.Identity.GetUserId() == Model.CreatorUserId)
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id })<text> | </text>
+    }
+    @Html.ActionLink("Back to List", "Index")
+</p>
